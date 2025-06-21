@@ -27,7 +27,11 @@ FILTER_VALUE = "_sw"                # O valor a ser procurado
 
 # --- Exemplos de outros filtros (descomente para usar) ---
 # FILTER_COLUMN_NAME = "Description"
+# -- or --
+# FILTER_COLUMN_NAME = "Device Information"
+
 # FILTER_VALUE = "TRUNK"
+
 
 # --- Seletores (Baseado no PLAN_UI_Scraping.md) ---
 USER_SELECTOR = "#username"

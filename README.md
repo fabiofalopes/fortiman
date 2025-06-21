@@ -1,77 +1,70 @@
-# FortiMan: Ferramenta de Análise de Portas FortiSwitch
+# FortiMan: FortiSwitch Port Analysis Tool
 
-Este projeto fornece um pipeline completo para extrair, processar e analisar dados da tabela "FortiSwitch Ports" a partir da interface web de um FortiGate. O processo está dividido em duas fases principais:
+## Quick Start
 
-1.  **Extração**: Um script de scraping (`fortiswitch_ports_scraper.py`) acede ao FortiGate, extrai todos os dados das portas e guarda-os num ficheiro CSV.
-2.  **Processamento**: Um segundo script (`process_switch_data.py`) pega nesse ficheiro CSV e transforma-o num relatório Excel (`.xlsx`), agrupando as portas por switch para facilitar a análise.
-
-## Funcionalidades Principais
-
-### Script de Extração (`fortiswitch_ports_scraper.py`)
-
-- **Automação Completa:** Faz o login, navega até à página correta, e extrai os dados sem qualquer intervenção manual.
-- **Visibilidade Automática de Colunas:** Deteta e ativa programaticamente todas as colunas da tabela que estejam desativadas por defeito na UI.
-- **Extração Robusta:** Lida com o scroll virtual, percorrendo toda a tabela para garantir que nenhuma linha de dados é perdida.
-- **Saída Estruturada:** Guarda os dados extraídos num ficheiro CSV dentro da pasta `outputs/`, com um timestamp para fácil identificação.
-
-### Script de Processamento (`process_switch_data.py`)
-
-- **Organização por Switch**: Lê o ficheiro CSV e cria um relatório em Excel.
-- **Estrutura de Mini-Tabelas**: No ficheiro Excel, cada switch tem a sua própria tabela, facilitando a visualização.
-- **Priorização de Switches Core**: As tabelas de switches que contêm "core" no nome são apresentadas no topo do relatório.
-- **Nomenclatura Clara**: O ficheiro final é guardado como `outputs/processed_<nome_do_ficheiro_original>.xlsx`.
-
-## Como Usar
-
-### 1. Pré-requisitos
-
-- Python 3.8+
-- Acesso a um FortiGate com um utilizador que tenha permissões para ver a página "FortiSwitch Ports".
-
-### 2. Instalação
-
-Clone o repositório e instale as dependências necessárias:
-
+### 1. Install Dependencies
 ```bash
 pip install -r requirements.txt
-```
-
-O Playwright também necessita de instalar os browsers que utiliza. Execute o seguinte comando para os instalar:
-
-```bash
 playwright install
 ```
 
-### 3. Configuração de Credenciais
-
-Crie um ficheiro chamado `.env` na raiz do projeto. Este ficheiro **não deve ser partilhado** ou enviado para repositórios de código (já está incluído no `.gitignore`). Adicione as suas credenciais e o URL do FortiGate a este ficheiro:
-
+### 2. Setup Credentials
+Create a `.env` file in the project root:
 ```dotenv
-# .env
 FORTIGATE_URL="https://192.168.1.99"
-USERNAME="seu_utilizador"
-PASSWORD="sua_password_super_secreta"
+USERNAME="your_username"
+PASSWORD="your_password"
 ```
 
-### 4. Execução do Pipeline
-
-O processo é executado em dois passos:
-
-**Passo 1: Extrair os dados do FortiGate**
-
-Execute o script de scraping. Ele irá gerar um ficheiro CSV na pasta `outputs/`.
-
+### 3. Run the Pipeline
 ```bash
+# Step 1: Extract data from FortiGate
 python fortiswitch_ports_scraper.py
+
+# Step 2: Process the CSV file (replace with your actual filename)
+python process_switch_data.py outputs/fortiswitch_ports_2025-01-20_15-30-45.csv
 ```
 
-**Passo 2: Processar o ficheiro CSV**
+### 4. Get Results
+- Raw data: `outputs/fortiswitch_ports_YYYY-MM-DD_HH-MM-SS.csv`
+- Processed report: `outputs/processed_fortiswitch_ports_YYYY-MM-DD_HH-MM-SS.xlsx`
 
-Execute o script de processamento, passando o caminho do ficheiro CSV gerado no passo anterior como argumento.
+---
 
-```bash
-# Substitua 'caminho/para/o/seu/ficheiro.csv' pelo nome do ficheiro real
-python process_switch_data.py outputs/fortiswitch_ports_2025-06-20_21-56-38.csv
+## What This Tool Does
+
+This project provides a complete pipeline to extract, process, and analyze FortiSwitch Ports data from a FortiGate web interface.
+
+### Phase 1: Data Extraction (`fortiswitch_ports_scraper.py`)
+- Automated login to FortiGate
+- Navigates to FortiSwitch Ports page
+- Automatically enables all table columns
+- Handles virtual scrolling to extract all data
+- Saves data to timestamped CSV file
+
+### Phase 2: Data Processing (`process_switch_data.py`)
+- Reads CSV and creates Excel report
+- Groups ports by switch
+- Prioritizes core switches at the top
+- Creates organized mini-tables for each switch
+
+## Requirements
+
+- Python 3.8+
+- FortiGate access with permissions to view FortiSwitch Ports
+- User credentials with appropriate access level
+
+## Project Structure
+
+```
+fortiman/
+├── fortiswitch_ports_scraper.py  # Data extraction script
+├── process_switch_data.py        # Data processing script
+├── requirements.txt              # Python dependencies
+├── outputs/                      # Generated files
+└── .env                         # Credentials (create this)
 ```
 
-Após a execução, encontrará o relatório final em formato Excel (`.xlsx`) na pasta `outputs/`, pronto para análise. 
+## Security Note
+
+The `.env` file contains sensitive credentials and should never be shared or committed to version control. It's already included in `.gitignore`. 
