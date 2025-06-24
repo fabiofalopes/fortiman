@@ -1,0 +1,49 @@
+============================================================
+FORTISWITCH LOG ANALYSIS SUMMARY
+============================================================
+
+Basic Statistics:
+- Total events: 686
+- Time range: 2025-06-05 16:01:46 to 2025-06-06 10:25:32
+- Duration: 0 days 18:23:46
+
+Event Levels:
+- notice: 672
+- warning: 9
+- information: 4
+- alert: 1
+
+Port Activity:
+- Unique ports with events: 46
+- Ports with >10 events (potentially unstable): 26
+
+Most Active Ports:
+- port24: 76 events
+- port36: 53 events
+- port29: 38 events
+- port12: 28 events
+- port8: 25 events
+- port4: 24 events
+- port20: 22 events
+- port42: 22 events
+- port25: 21 events
+- port41: 21 events
+
+Spanning Tree Activity:
+- Total STP state changes: 89
+- Total STP role changes: 78
+
+Most Common Messages:
+- primary port port24 instance 0 changed role from disabled to...: 14
+- primary switch port port24 has come up: 14
+- primary port port24 instance 0 changed state from discarding...: 13
+- primary switch port port24 has gone down: 12
+- primary port port24 instance 0 changed role from designated ...: 12
+
+Recommendations:
+- CRITICAL: Multiple ports showing high activity - possible network instability
+- Check physical connections for ports with high down/up cycles
+- Review spanning tree configuration for optimal network topology
+- WARNING: Alert/warning events detected - immediate attention required
+- Monitor memory usage - log indicates memory event log filling up
+- Consider adjusting STP timers if topology changes are frequent

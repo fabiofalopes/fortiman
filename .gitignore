@@ -125,3 +125,5 @@ auth_state.json
 outputs/
 
 .pdf
+
+private/
